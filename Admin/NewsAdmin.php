@@ -25,4 +25,9 @@ class NewsAdmin extends Admin
 
         $this->setNavigation(new Navigation($rootNavigationItem));
     }
+
+    public function getJsBundleName()
+    {
+        return 'examplenews';
+    }
 }
