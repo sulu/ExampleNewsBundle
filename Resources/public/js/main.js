@@ -30,6 +30,13 @@ define(function() {
                     return '<div data-aura-component="news/form@examplenews"/>';
                 }
             });
+
+            app.sandbox.mvc.routes.push({
+                route: 'example/news/edit::id',
+                callback: function(id) {
+                    return '<div data-aura-component="news/form@examplenews" data-aura-id="' + id + '"/>';
+                }
+            });
         }
     };
 });
