@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1" resname="navigation.news">
+                <source>navigation.news</source>
+                <target>News</target>
+            </trans-unit>
+            <trans-unit id="2" resname="news.headline">
+                <source>news.headline</source>
+                <target>News</target>
+            </trans-unit>
+            <trans-unit id="3" resname="news.content">
+                <source>news.content</source>
+                <target>Content</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
