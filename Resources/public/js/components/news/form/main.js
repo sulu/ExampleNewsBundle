@@ -56,6 +56,9 @@ define(['underscore', 'jquery', 'text!./form.html'], function(_, $, form) {
 
         bindCustomEvents: function() {
             this.sandbox.on('sulu.toolbar.save', this.save.bind(this));
+            this.sandbox.on('sulu.header.back', function() {
+                this.sandbox.emit('sulu.router.navigate', 'example/news');
+            }.bind(this));
         },
 
         save: function(action) {
