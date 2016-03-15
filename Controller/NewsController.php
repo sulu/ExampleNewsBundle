@@ -5,11 +5,91 @@ namespace Example\NewsBundle\Controller;
 use Example\NewsBundle\News\NewsManager;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\FOSRestController;
+use Sulu\Component\Rest\ListBuilder\Doctrine\FieldDescriptor\DoctrineFieldDescriptor;
+use Sulu\Component\Rest\ListBuilder\ListRepresentation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class NewsController extends FOSRestController
 {
+    const ENTITY_NAME = 'ExampleNewsBundle:NewsItem';
+
+    /**
+     * Returns array of existing field-descriptors.
+     *
+     * @return array
+     */
+    private function getFieldDescriptors()
+    {
+        return [
+            'id' => new DoctrineFieldDescriptor(
+                'id',
+                'id',
+                self::ENTITY_NAME,
+                'public.id',
+                [],
+                true
+            ),
+            'title' => new DoctrineFieldDescriptor(
+                'title',
+                'title',
+                self::ENTITY_NAME,
+                'public.title'
+            ),
+            'content' => new DoctrineFieldDescriptor(
+                'content',
+                'content',
+                self::ENTITY_NAME,
+                'news.content'
+            )
+        ];
+    }
+
+    /**
+     * Returns all fields that can be used by list.
+     *
+     * @FOS\RestBundle\Controller\Annotations\Get("news/fields")
+     *
+     * @return Response
+     */
+    public function getNewsFieldsAction()
+    {
+        return $this->handleView($this->view(array_values($this->getFieldDescriptors())));
+    }
+
+    /**
+     * Shows all news-items
+     *
+     * @param Request $request
+     *
+     * @Get("news")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getNewsListAction(Request $request)
+    {
+        $restHelper = $this->get('sulu_core.doctrine_rest_helper');
+        $factory = $this->get('sulu_core.doctrine_list_builder_factory');
+
+        $listBuilder = $factory->create(self::ENTITY_NAME);
+        $restHelper->initializeListBuilder($listBuilder, $this->getFieldDescriptors());
+        $results = $listBuilder->execute();
+
+        $list = new ListRepresentation(
+            $results,
+            'news-items',
+            'get_news_list',
+            $request->query->all(),
+            $listBuilder->getCurrentPage(),
+            $listBuilder->getLimit(),
+            $listBuilder->count()
+        );
+
+        $view = $this->view($list, 200);
+
+        return $this->handleView($view);
+    }
+
     /**
      * Returns a single news-item identified by id.
      *
@@ -22,20 +102,6 @@ class NewsController extends FOSRestController
         $newsItem = $this->getManager()->read($id);
 
         return $this->handleView($this->view($newsItem));
-    }
-
-    /**
-     * Returns all news-items.
-     *
-     * @Get("news")
-     *
-     * @return Response
-     */
-    public function getNewsListAction()
-    {
-        $newsItems = $this->getManager()->readAll();
-
-        return $this->handleView($this->view($newsItems));
     }
 
     /**
