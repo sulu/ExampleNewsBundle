@@ -12,16 +12,11 @@ class NewsAdmin extends Admin
     {
         $rootNavigationItem = new NavigationItem($title);
 
-        $section = new NavigationItem('navigation.webspaces');
-
-        $global = new NavigationItem('navigation.global-content');
-        $section->addChild($global);
-
-        $news = new NavigationItem('navigation.news');
+        $global = new NavigationItem('navigation.modules', $rootNavigationItem);
+        $news = new NavigationItem('navigation.news', $global);
         $news->setAction('example/news');
-        $global->addChild($news);
-
-        $rootNavigationItem->addChild($section);
+        $news->setIcon('pencil-square-o');
+        $news->setPosition(25);
 
         $this->setNavigation(new Navigation($rootNavigationItem));
     }
