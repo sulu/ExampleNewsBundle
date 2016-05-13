@@ -15,13 +15,13 @@ previous branch and contains descriptions in form of comments and a link to the 
 
 ## Installation
 
-To install the example use a fresh clone from [symfony-standard](https://github.com/symfony/symfony-standard) and run
+To install the example use a fresh clone from [sulu-standard](https://github.com/sulu/sulu-standard) and run
 following commands to clone this Repository into the right folder.
 
 ```bash
 mkdir src/Example
 cd src/Example
-git clone git@github.com:sulu-io/ExampleNewsBundle.git NewsBundle
+git clone https://github.com/sulu-io/ExampleNewsBundle.git NewsBundle
 ```
 
 Apply following patch to enable and configure ExampleNewsBundle:
@@ -56,6 +56,13 @@ index ae2ceb4..7047e47 100644
 ```
 
 To build the translations follow the tutorial [part 5](http://blog.sulu.io/how-to-develop-a-bundle-in-the-sulu-admin-5#build-translation).
+
+At the end run following command to install assets of this bundle and update the database:
+
+```
+app/console assets:install --symlink --relative
+app/console doctrine:schema:update --force
+```
 
 ## See also
 
