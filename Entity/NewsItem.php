@@ -46,6 +46,13 @@ class NewsItem
      */
     private $medias;
 
+    /**
+     * @var \DateTime
+     *
+     * @Expose
+     */
+    private $releaseDate;
+
     public function __construct()
     {
         $this->medias = new ArrayCollection();
@@ -192,5 +199,29 @@ class NewsItem
                 }
             ),
         ];
+    }
+
+    /**
+     * Set releaseDate
+     *
+     * @param \DateTime $releaseDate
+     *
+     * @return NewsItem
+     */
+    public function setReleaseDate($releaseDate)
+    {
+        $this->releaseDate = $releaseDate;
+
+        return $this;
+    }
+
+    /**
+     * Get releaseDate
+     *
+     * @return \DateTime
+     */
+    public function getReleaseDate()
+    {
+        return $this->releaseDate;
     }
 }

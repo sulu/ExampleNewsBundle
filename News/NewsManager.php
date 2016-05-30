@@ -102,6 +102,11 @@ class NewsManager
             )
         );
 
+        $releaseDate = $this->getValue($data, 'releaseDate', null);
+        if (null !== $releaseDate) {
+            $entity->setReleaseDate(new \DateTime($releaseDate));
+        }
+
         return $entity;
     }
 

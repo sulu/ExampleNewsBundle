@@ -9,6 +9,7 @@
         <field name="title" type="string" column="title" length="255"/>
         <field name="content" type="text" column="content"/>
         <field name="mediaDisplayOption" type="string" column="mediaDisplayOption" length="10" nullable="true"/>
+        <field name="releaseDate" type="datetime" column="releaseDate" nullable="true"/>
 
         <many-to-many field="medias" target-entity="Sulu\Bundle\MediaBundle\Entity\Media"/>
     </entity>

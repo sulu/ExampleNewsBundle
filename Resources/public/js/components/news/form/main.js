@@ -10,7 +10,8 @@ define(['underscore', 'jquery', 'text!./form.html'], function(_, $, form) {
             translations: {
                 title: 'public.title',
                 content: 'news.content',
-                media: 'news.media'
+                media: 'news.media',
+                releaseDate: 'news.release-date'
             }
         },
 

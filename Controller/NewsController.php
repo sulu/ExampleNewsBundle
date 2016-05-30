@@ -41,6 +41,12 @@ class NewsController extends FOSRestController
                 'content',
                 self::ENTITY_NAME,
                 'news.content'
+            ),
+            'releaseDate' => new DoctrineFieldDescriptor(
+                'releaseDate',
+                'releaseDate',
+                self::ENTITY_NAME,
+                'news.release-date'
             )
         ];
     }
@@ -71,8 +77,15 @@ class NewsController extends FOSRestController
         $restHelper = $this->get('sulu_core.doctrine_rest_helper');
         $factory = $this->get('sulu_core.doctrine_list_builder_factory');
 
+        $fieldDescriptors = $this->getFieldDescriptors();
         $listBuilder = $factory->create(self::ENTITY_NAME);
-        $restHelper->initializeListBuilder($listBuilder, $this->getFieldDescriptors());
+        $restHelper->initializeListBuilder($listBuilder,$fieldDescriptors);
+
+        if (null === $request->get('sortBy')) {
+            // default sort-by releaseDate ASC
+            $listBuilder->sort($fieldDescriptors['releaseDate']);
+        }
+
         $results = $listBuilder->execute();
 
         $list = new ListRepresentation(

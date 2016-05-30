@@ -18,6 +18,10 @@
                 <source>news.media</source>
                 <target>Assets</target>
             </trans-unit>
+            <trans-unit id="5" resname="news.release-date">
+                <source>news.release-date</source>
+                <target>Release date</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
