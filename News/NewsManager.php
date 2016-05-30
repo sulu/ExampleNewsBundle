@@ -4,6 +4,7 @@ namespace Example\NewsBundle\News;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Example\NewsBundle\Entity\NewsItem;
+use Sulu\Bundle\MediaBundle\Entity\Media;
 
 class NewsManager
 {
@@ -91,6 +92,15 @@ class NewsManager
     {
         $entity->setTitle($data['title']);
         $entity->setContent($this->getValue($data, 'content'));
+        $entity->setMediaDisplayOption($this->getMediaValue($data, 'displayOption', null));
+        $entity->setMedias(
+            array_map(
+                function ($id) {
+                    return $this->entityManager->getReference(Media::class, $id);
+                },
+                $this->getMediaValue($data, 'ids', [])
+            )
+        );
 
         return $entity;
     }
@@ -108,5 +118,27 @@ class NewsManager
     protected function getValue(array $data, $property, $default = '')
     {
         return array_key_exists($property, $data) ? $data[$property] : $default;
+    }
+
+    /**
+     * Returns media-property of given data array.
+     * If the key not exists default value will be returned.
+     *
+     * @param array $data
+     * @param string $mediaProperty
+     * @param mixed $default
+     * @param string $property
+     *
+     * @return mixed
+     */
+    protected function getMediaValue(array $data, $mediaProperty, $default = null, $property = 'media')
+    {
+        $media = $this->getValue($data, $property, null);
+
+        if (!$media) {
+            return $default;
+        }
+
+        return $this->getValue($media, $mediaProperty, $default);
     }
 }
