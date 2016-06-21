@@ -14,6 +14,11 @@ class NewsContentNavigationProvider implements ContentNavigationProviderInterfac
         $details->setPosition(10);
         $details->setComponent('news/edit/details@examplenews');
 
-        return [$details];
+        $seo = new ContentNavigationItem('content-navigation.example.seo');
+        $seo->setAction('seo');
+        $seo->setPosition(20);
+        $seo->setComponent('news/edit/seo@examplenews');
+
+        return [$details, $seo];
     }
 }
