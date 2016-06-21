@@ -11,6 +11,12 @@
             <tag name="sulu.admin"/>
         </service>
 
+        <service id="example_news.navigation_provider.news"
+                 class="Example\NewsBundle\Admin\NewsContentNavigationProvider">
+            <tag name="sulu_admin.content_navigation" alias="news"/>
+            <tag name="sulu.context" context="admin"/>
+        </service>
+
         <service id="example_news.manager" class="Example\NewsBundle\News\NewsManager">
             <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>

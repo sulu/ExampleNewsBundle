@@ -27,14 +27,14 @@ define(function() {
             app.sandbox.mvc.routes.push({
                 route: 'example/news/add',
                 callback: function() {
-                    return '<div data-aura-component="news/form@examplenews"/>';
+                    return '<div data-aura-component="news/edit@examplenews"/>';
                 }
             });
 
             app.sandbox.mvc.routes.push({
-                route: 'example/news/edit::id',
+                route: 'example/news/edit::id/:content',
                 callback: function(id) {
-                    return '<div data-aura-component="news/form@examplenews" data-aura-id="' + id + '"/>';
+                    return '<div data-aura-component="news/edit@examplenews" data-aura-id="' + id + '"/>';
                 }
             });
         }

@@ -14,6 +14,14 @@
                 <source>news.content</source>
                 <target>Inhalt</target>
             </trans-unit>
+            <trans-unit id="4" resname="content-navigation.example.details">
+                <source>content-navigation.example.details</source>
+                <target>Details</target>
+            </trans-unit>
+            <trans-unit id="5" resname="content-navigation.example.seo">
+                <source>content-navigation.example.seo</source>
+                <target>SEO</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
