@@ -1,7 +1,9 @@
 require.config({
     paths: {
         examplenews: '../../examplenews/js',
-        examplenewscss: '../../examplenews/css'
+        examplenewscss: '../../examplenews/css',
+
+        'type/news-selection': '../../examplenews/js/validation/types/news-selection'
     }
 });
 

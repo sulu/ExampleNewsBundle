@@ -64,16 +64,37 @@ class NewsController extends FOSRestController
      *
      * @Get("news")
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function getNewsListAction(Request $request)
     {
         $restHelper = $this->get('sulu_core.doctrine_rest_helper');
         $factory = $this->get('sulu_core.doctrine_list_builder_factory');
 
+        $fieldDescriptors = $this->getFieldDescriptors();
         $listBuilder = $factory->create(self::ENTITY_NAME);
-        $restHelper->initializeListBuilder($listBuilder, $this->getFieldDescriptors());
-        $results = $listBuilder->execute();
+        $restHelper->initializeListBuilder($listBuilder, $fieldDescriptors);
+
+        $ids = null;
+        if (null !== $request->get('ids')) {
+            $ids = array_filter(explode(',', $request->get('ids', '')));
+            $listBuilder->in($fieldDescriptors['id'], $ids);
+            $listBuilder->limit(count($ids));
+        }
+
+        $results = $unsortedResults = $listBuilder->execute();
+
+        // keep sorting of requested ids
+        if (null !== $ids) {
+            $results = [];
+            foreach ($unsortedResults as $result) {
+                $results[array_search($result['id'], $ids, false)] = $result;
+            }
+
+            ksort($results);
+
+            $results = array_values($results);
+        }
 
         $list = new ListRepresentation(
             $results,
