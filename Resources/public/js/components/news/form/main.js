@@ -9,7 +9,9 @@ define(['underscore', 'jquery', 'text!./form.html'], function(_, $, form) {
             },
             translations: {
                 title: 'public.title',
-                content: 'news.content'
+                content: 'news.content',
+                media: 'news.media',
+                releaseDate: 'news.release-date'
             }
         },
 
@@ -40,11 +42,15 @@ define(['underscore', 'jquery', 'text!./form.html'], function(_, $, form) {
         },
 
         render: function() {
-            this.$el.html(this.templates.form({translations: this.translations}));
+            this.$el.html(
+                this.templates.form({translations: this.translations, locale: this.sandbox.sulu.user.locale})
+            );
 
             this.form = this.sandbox.form.create('#news-form');
             this.form.initialized.then(function() {
-                this.sandbox.form.setData('#news-form', this.data || {});
+                this.sandbox.form.setData('#news-form', this.data || {}).then(function() {
+                    this.sandbox.start(this.$el);
+                }.bind(this));
             }.bind(this));
         },
 
@@ -58,6 +64,9 @@ define(['underscore', 'jquery', 'text!./form.html'], function(_, $, form) {
             this.sandbox.on('sulu.toolbar.save', this.save.bind(this));
             this.sandbox.on('sulu.header.back', function() {
                 this.sandbox.emit('sulu.router.navigate', 'example/news');
+            }.bind(this));
+            this.sandbox.on('sulu.content.changed', function() {
+                this.sandbox.emit('sulu.header.toolbar.item.enable', 'save');
             }.bind(this));
         },
 

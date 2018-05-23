@@ -3,8 +3,32 @@
         <label for="news-title"><%= translations.title %></label>
         <input type="text" id="news-title" name="title" class="form-element input-bold required" data-mapper-property="title" data-validation-required="true"/>
     </div>
-    <div class="form-group">
+    <div class="form-group grid-row">
         <label for="news-content"><%= translations.content %></label>
         <textarea id="news-content" name="content" class="form-element" data-mapper-property="content"></textarea>
+    </div>
+    <div class="form-group grid-row">
+        <label for="news-release-date"><%= translations.releaseDate %></label>
+        <div id="news-release-date"
+             data-form="true"
+             data-type="husky-input"
+             data-mapper-property="releaseDate"
+             data-aura-component="input@husky"
+             data-aura-skin="date"
+             data-aura-instance-name="releaseDate">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="news-media"><%= translations.media %></label>
+        <div id="news-media"
+             data-form="true"
+             data-type="media-selection"
+             data-mapper-property="media"
+             data-type-instance-name="media"
+             data-aura-instance-name="media"
+             data-aura-component="media-selection@sulumedia"
+             data-aura-url="/admin/api/media"
+             data-aura-locale="<%= locale %>">
+        </div>
     </div>
 </form>
