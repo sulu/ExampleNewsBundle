@@ -14,6 +14,10 @@
                 <source>news.content</source>
                 <target>Content</target>
             </trans-unit>
+            <trans-unit id="4" resname="news-selection.no-news-selected">
+                <source>news-selection.no-news-selected</source>
+                <target>No news selected</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

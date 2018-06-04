@@ -18,11 +18,25 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
+
         $rootNode = $treeBuilder->root('example_news');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->arrayNode('types')
+                ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('news')
+                        ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('template')
+                                    ->defaultValue('ExampleNewsBundle:Template:content-types/news-selection.html.twig')
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }

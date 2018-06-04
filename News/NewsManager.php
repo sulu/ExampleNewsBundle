@@ -45,6 +45,18 @@ class NewsManager
     }
 
     /**
+     * Returns news-item with given id.
+     *
+     * @param int[] $ids
+     *
+     * @return NewsItem[]
+     */
+    public function readList($ids)
+    {
+        return $this->entityManager->getRepository(NewsItem::class)->findBy(['id' => $ids]);
+    }
+
+    /**
      * Returns all news-items.
      *
      * @return NewsItem[]
